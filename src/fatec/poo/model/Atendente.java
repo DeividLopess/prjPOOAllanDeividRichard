@@ -31,7 +31,7 @@ public class Atendente extends Pessoa{
     }
     //ADD QUARTO HOTEL
     public void addQuartoHotel(QuartoHotel q){
-        quartoHotel.add(q);
+        this.quartoHotel.add(q);
     }
     
     //REMOVE QUARTO Hotel

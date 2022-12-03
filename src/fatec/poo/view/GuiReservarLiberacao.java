@@ -5,6 +5,11 @@
  */
 package fatec.poo.view;
 
+import fatec.poo.model.Atendente;
+import fatec.poo.model.Hospede;
+import fatec.poo.model.QuartoHotel;
+import java.util.ArrayList;
+
 /**
  *
  * @author Deivi
@@ -14,8 +19,11 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
     /**
      * Creates new form GuiReservarLiberacao
      */
-    public GuiReservarLiberacao() {
+    public GuiReservarLiberacao(ArrayList<Atendente> atendente, ArrayList<Hospede> hospede, ArrayList<QuartoHotel> hotel) {
         initComponents();
+        atendentes = atendente;
+        hospedes = hospede;
+        quartos = hotel;
     }
 
     /**
@@ -33,16 +41,22 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtRegistroFuncionario = new javax.swing.JTextField();
-        txtCpfHospede = new javax.swing.JTextField();
+        txtRegistroFuncional = new javax.swing.JTextField();
+        txtCPFHospede = new javax.swing.JTextField();
         txtNumeroQuarto = new javax.swing.JTextField();
         txtDataEntrada = new javax.swing.JTextField();
         txtDataSaida = new javax.swing.JTextField();
-        txtValorPagar = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btnReservar = new javax.swing.JButton();
         btnLiberar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        lblNomeHospede = new javax.swing.JLabel();
+        lblValorPagar1 = new javax.swing.JLabel();
+        lblSituacao = new javax.swing.JLabel();
+        lblNomeAtendente = new javax.swing.JLabel();
+        btnPesquisarRegFunc = new javax.swing.JButton();
+        btnPesquisarHospede = new javax.swing.JButton();
+        btnPesquisarNumeroQuarto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Reservar/Liberar Quarto");
@@ -59,19 +73,33 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
 
         jLabel6.setText("Valor a Pagar");
 
+        txtCPFHospede.setEnabled(false);
+
+        txtNumeroQuarto.setEnabled(false);
+
+        txtDataEntrada.setEnabled(false);
         txtDataEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDataEntradaActionPerformed(evt);
             }
         });
 
+        txtDataSaida.setEnabled(false);
+
         jLabel7.setText("Situação");
 
         btnReservar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/icon/Inserir.png"))); // NOI18N
         btnReservar.setText("Reservar");
+        btnReservar.setEnabled(false);
+        btnReservar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReservarActionPerformed(evt);
+            }
+        });
 
         btnLiberar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/icon/Remover.png"))); // NOI18N
         btnLiberar.setText("Liberar");
+        btnLiberar.setEnabled(false);
         btnLiberar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLiberarActionPerformed(evt);
@@ -86,10 +114,49 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
             }
         });
 
+        lblNomeHospede.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        lblValorPagar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        lblSituacao.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        lblNomeAtendente.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        btnPesquisarRegFunc.setText("...");
+        btnPesquisarRegFunc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarRegFuncActionPerformed(evt);
+            }
+        });
+
+        btnPesquisarHospede.setText("...");
+        btnPesquisarHospede.setEnabled(false);
+        btnPesquisarHospede.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarHospedeActionPerformed(evt);
+            }
+        });
+
+        btnPesquisarNumeroQuarto.setText("...");
+        btnPesquisarNumeroQuarto.setEnabled(false);
+        btnPesquisarNumeroQuarto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarNumeroQuartoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(117, Short.MAX_VALUE)
+                .addComponent(btnReservar)
+                .addGap(18, 18, 18)
+                .addComponent(btnLiberar)
+                .addGap(18, 18, 18)
+                .addComponent(btnSair)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,26 +168,34 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtNumeroQuarto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                        .addComponent(txtCpfHospede, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtRegistroFuncionario, javax.swing.GroupLayout.Alignment.LEADING))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtValorPagar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                            .addComponent(txtDataEntrada, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDataSaida, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
-                .addComponent(btnReservar)
-                .addGap(18, 18, 18)
-                .addComponent(btnLiberar)
-                .addGap(18, 18, 18)
-                .addComponent(btnSair)
-                .addContainerGap())
+                            .addComponent(txtNumeroQuarto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                            .addComponent(txtCPFHospede, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtRegistroFuncional, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnPesquisarHospede)
+                            .addComponent(btnPesquisarRegFunc)
+                            .addComponent(btnPesquisarNumeroQuarto))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNomeHospede, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(13, 13, 13))
+                            .addComponent(lblNomeAtendente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblValorPagar1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtDataEntrada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                                .addComponent(txtDataSaida, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnLiberar, btnReservar, btnSair});
@@ -128,33 +203,48 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtRegistroFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCpfHospede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtRegistroFuncional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPesquisarRegFunc))
+                        .addGap(5, 5, 5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtCPFHospede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPesquisarHospede)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNomeAtendente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNomeHospede, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtNumeroQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNumeroQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarNumeroQuarto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(txtDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtValorPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblValorPagar1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(51, 51, 51)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnReservar)
                     .addComponent(btnLiberar)
@@ -167,10 +257,6 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtDataEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataEntradaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataEntradaActionPerformed
-
     private void btnLiberarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiberarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLiberarActionPerformed
@@ -179,9 +265,143 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
+    private void txtDataEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataEntradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDataEntradaActionPerformed
+
+    private void btnPesquisarNumeroQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarNumeroQuartoActionPerformed
+    int i;
+        
+        for ( i = 0; i < quartos.size() ; i++) {
+            if(quartos.get(i).getNumQuarto() == Integer.parseInt(txtNumeroQuarto.getText())){
+                break;
+            }
+        }
+        
+        if(i < quartos.size()){
+            posQuarto = i;
+        }else{
+            posQuarto = -1;
+        }
+        
+        if(posQuarto >=0){
+            if(quartos.get(posQuarto).isSituacao() == true){
+               lblSituacao.setText("Quarto Ocupado");
+            }else{
+                lblSituacao.setText("Livre");
+                txtDataEntrada.setEnabled(true);
+                btnReservar.setEnabled(true);
+            }
+        }else{
+            lblSituacao.setText("Quarto não cadastrado");
+        }
+    }//GEN-LAST:event_btnPesquisarNumeroQuartoActionPerformed
+
+    private void btnPesquisarRegFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarRegFuncActionPerformed
+        int i;
+        
+        for ( i = 0; i < atendentes.size() ; i++) {
+            if(atendentes.get(i).getRegFunc().equals(txtRegistroFuncional.getText())) {
+                break;
+            }
+        }
+        
+        if(i < atendentes.size()){
+            posAtendente = i;
+        }else{
+            posAtendente = -1;
+        }
+        
+        if(posAtendente >=0){
+        lblNomeAtendente.setText(atendentes.get(posAtendente).getNome());
+        
+        txtRegistroFuncional.setEnabled(false);
+        btnPesquisarRegFunc.setEnabled(false);
+        
+        txtCPFHospede.setEnabled(true);
+        btnPesquisarHospede.setEnabled(true);
+        
+        }else{
+        lblNomeAtendente.setText("Atendente não Cadastrado");
+        }
+               
+    }//GEN-LAST:event_btnPesquisarRegFuncActionPerformed
+
+    private void btnPesquisarHospedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarHospedeActionPerformed
+        int i;
+        for ( i = 0; i < hospedes.size() ; i++) {
+            if(hospedes.get(i).getCpf().equals(txtCPFHospede.getText())) {
+                break;
+            }
+        }
+        
+        if(i < hospedes.size()){
+            posHospede = i;
+        }else{
+            posHospede = -1;
+        }
+        
+        if(posHospede >=0){
+        lblNomeHospede.setText(hospedes.get(posHospede).getNome());
+        
+        txtCPFHospede.setEnabled(false);
+        btnPesquisarHospede.setEnabled(false);
+        
+        if(hospedes.get(posHospede).getQuartoHotel() != null){
+            txtNumeroQuarto.setText(Integer.toString(hospedes.get(posHospede).getQuartoHotel().getNumQuarto()));
+            
+            if(hospedes.get(posHospede).getQuartoHotel().isSituacao() == true){
+               lblSituacao.setText("Ocupado");
+            }else{
+                lblSituacao.setText("Livre");
+            }
+            
+            txtDataEntrada.setText(hospedes.get(posHospede).getQuartoHotel().getDataEntrada());
+            
+            txtDataSaida.setEnabled(true);
+            btnLiberar.setEnabled(true);
+        }else{
+            txtNumeroQuarto.setEnabled(true);
+            btnPesquisarNumeroQuarto.setEnabled(true);
+        }
+        
+
+        }else{
+        lblNomeHospede.setText("Hospede não Cadastrado");
+        }
+    }//GEN-LAST:event_btnPesquisarHospedeActionPerformed
+
+    private void btnReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservarActionPerformed
+        int i;
+        for ( i = 0; i < quartos.size() ; i++) {
+            if(quartos.get(i).getNumQuarto() == Integer.parseInt(txtNumeroQuarto.getText())){
+                break;
+            }
+        }
+
+        if ( i < quartos.size()){
+            posQuarto = i; //localizou o objeto Departamento no ArrayList
+        }else{
+            posQuarto = -1; //não loclizou o objeto Departamento no ArrayList
+        }
+        
+        if (posQuarto >= 0){//operação de alterar e excluir
+            
+//           atendentes.get(posAtendente).addQuartoHotel(quartos.get(posQuarto));
+            
+            quartos.get(posQuarto).reservar(hospedes.get(posHospede), atendentes.get(posAtendente));
+            
+        }else{//operação incluir
+                       
+        }  
+    }//GEN-LAST:event_btnReservarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLiberar;
+    private javax.swing.JButton btnPesquisarHospede;
+    private javax.swing.JButton btnPesquisarNumeroQuarto;
+    private javax.swing.JButton btnPesquisarRegFunc;
     private javax.swing.JButton btnReservar;
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel1;
@@ -191,11 +411,22 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField txtCpfHospede;
+    private javax.swing.JLabel lblNomeAtendente;
+    private javax.swing.JLabel lblNomeHospede;
+    private javax.swing.JLabel lblSituacao;
+    private javax.swing.JLabel lblValorPagar1;
+    private javax.swing.JTextField txtCPFHospede;
     private javax.swing.JTextField txtDataEntrada;
     private javax.swing.JTextField txtDataSaida;
     private javax.swing.JTextField txtNumeroQuarto;
-    private javax.swing.JTextField txtRegistroFuncionario;
-    private javax.swing.JTextField txtValorPagar;
+    private javax.swing.JTextField txtRegistroFuncional;
     // End of variables declaration//GEN-END:variables
+    private ArrayList<Atendente> atendentes;
+    private int posAtendente;
+    
+    private ArrayList<Hospede> hospedes;
+    private int posHospede;
+    
+    private ArrayList<QuartoHotel> quartos;
+    private int posQuarto;
 }

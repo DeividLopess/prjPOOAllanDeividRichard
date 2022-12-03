@@ -8,6 +8,7 @@ public class Hospede extends Pessoa{
     private String cpf;
     private double txDesconto;
     private QuartoHotel quartoHotel;
+    private String idade;
     
     //CONSTRUTOR
     public Hospede(String cpf, String nome) {
@@ -23,6 +24,11 @@ public class Hospede extends Pessoa{
     public void setQuartoHotel(QuartoHotel quartoHotel) {
         this.quartoHotel = quartoHotel;
     }
+
+    public void setIdade(String idade) {
+        this.idade = idade;
+    }
+    
     
     //GETS
     public String getCpf() {
@@ -36,6 +42,11 @@ public class Hospede extends Pessoa{
     public QuartoHotel getQuartoHotel() {
         return quartoHotel;
     }
+
+    public String getIdade() {
+        return idade;
+    }
+    
     
     
     

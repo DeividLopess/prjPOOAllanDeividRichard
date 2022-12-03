@@ -313,6 +313,7 @@ public class GuiCadastroAtendente extends javax.swing.JFrame {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         cadastroAtendente.get(posAtendente).setEndereco(txtEndereco.getText());
         cadastroAtendente.get(posAtendente).setTelefone(txtTelefone.getText());
+        cadastroAtendente.get(posAtendente).setNome(txtNome.getText());
         
         
         if(rbdManha.isSelected()){

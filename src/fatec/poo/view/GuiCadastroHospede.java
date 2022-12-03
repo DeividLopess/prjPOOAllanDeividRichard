@@ -7,6 +7,7 @@ package fatec.poo.view;
 
 import fatec.poo.model.Hospede;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  *
@@ -19,6 +20,7 @@ public class GuiCadastroHospede extends javax.swing.JFrame {
      */
     public GuiCadastroHospede( ArrayList<Hospede> hospedes) {
         initComponents();
+        cadastroHospede = hospedes;
     }
 
     /**
@@ -106,6 +108,16 @@ public class GuiCadastroHospede extends javax.swing.JFrame {
             }
         });
 
+        txtNome.setEnabled(false);
+
+        txtEndereco.setEnabled(false);
+
+        txtTelefone.setEnabled(false);
+
+        txtTaxaDesconto.setEnabled(false);
+
+        txtIdade.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -181,19 +193,145 @@ public class GuiCadastroHospede extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        int i;
+        
+        //If para correr o Array em busca do Objeto que possui o CPF digitado
+        for (i = 0; i < cadastroHospede.size() ; i++) {
+            if(cadastroHospede.get(i).getCpf().equals(txtCpf.getText())) {
+                break;
+            }
+        }
+        if(i < cadastroHospede.size()){
+            posHospede = i;
+            
+        }else{
+            posHospede = -1;
+//            JOptionPane.showMessageDialog(null,"Hospede não Cadastrado");
+        }
+        
+        if(posHospede >=0){
+            txtNome.setText(cadastroHospede.get(posHospede).getNome());
+            txtEndereco.setText(cadastroHospede.get(posHospede).getEndereco());
+            txtTelefone.setText(cadastroHospede.get(posHospede).getTelefone());
+            txtTaxaDesconto.setText(String.valueOf(cadastroHospede.get(posHospede).getTxDesconto() * 100));
+            txtIdade.setText(cadastroHospede.get(posHospede).getIdade());//Criar no Hospede, pois só ele precisa ou no Pessoa, toda pessoa tem idade?
+        
+            btnConsultar.setEnabled(false);
+            btnInserir.setEnabled(false);
+            btnAlterar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+            txtCpf.setEnabled(false);
+
+        }else{
+            btnConsultar.setEnabled(false);
+            btnInserir.setEnabled(true);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+
+        }
+
+
+        txtCpf.setEnabled(false);
+        txtNome.setEnabled(true);
+        txtEndereco.setEnabled(true);
+        txtTelefone.setEnabled(true);
+        txtTaxaDesconto.setEnabled(true);
+        txtIdade.setEnabled(true);
+
+                                    
 
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        Hospede hospede = new Hospede(txtCpf.getText(), txtNome.getText());
+
+        hospede.setEndereco(txtEndereco.getText());
+        hospede.setTelefone(txtTelefone.getText());
+        hospede.setTxDesconto(Double.parseDouble(txtTaxaDesconto.getText()));
+        hospede.setIdade((txtIdade.getText()));
+        
+        cadastroHospede.add(hospede);
+        
+        //Limpando os textos
+        txtCpf.setText(null);
+        txtNome.setText(null);
+        txtEndereco.setText(null);
+        txtTelefone.setText(null);
+        txtTaxaDesconto.setText(null);
+        txtIdade.setText(null);
+        
+        //Retornando as áreas de texto a situação inicial
+        txtCpf.setEnabled(true);
+        txtNome.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        txtTaxaDesconto.setEnabled(false);
+        txtIdade.setEnabled(false);
+        
+        //Retornando os botões a situação incial
+        btnConsultar.setEnabled(true);
+        btnInserir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        
+        //Volta para informar CPF
+        txtCpf.requestFocus();
 
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        cadastroHospede.get(posHospede).setNome(txtNome.getText());
+        cadastroHospede.get(posHospede).setEndereco(txtEndereco.getText());
+        cadastroHospede.get(posHospede).setTelefone(txtTelefone.getText());
+        cadastroHospede.get(posHospede).setTxDesconto(Double.parseDouble(txtTaxaDesconto.getText()));
+        cadastroHospede.get(posHospede).setIdade(txtIdade.getText());
+
+        
+        //Limpando os textos
+        txtCpf.setText(null);
+        txtNome.setText(null);
+        txtEndereco.setText(null);
+        txtTelefone.setText(null);
+        txtTaxaDesconto.setText(null);
+        txtIdade.setText(null);
+        
+        //Retornando as áreas de texto a situação inicial
+        txtCpf.setEnabled(true);
+        txtNome.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        txtTaxaDesconto.setEnabled(false);
+        txtIdade.setEnabled(false);
+        
+        //Voltando os botões a situação inicial
+        btnConsultar.setEnabled(true);
+        btnInserir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        txtCpf.requestFocus();
 
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-
+        if (posHospede >= 0){
+            cadastroHospede.remove(posHospede);
+            posHospede = -1;
+        }
+        
+        txtCpf.setText(null);
+        txtNome.setText(null);
+        txtEndereco.setText(null);
+        txtTelefone.setText(null);
+        txtTaxaDesconto.setText(null);
+        txtIdade.setText(null);
+        
+        
+        btnConsultar.setEnabled(true);
+        btnInserir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        txtCpf.setEnabled(true);
+        txtCpf.requestFocus();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -221,4 +359,7 @@ public class GuiCadastroHospede extends javax.swing.JFrame {
     private javax.swing.JTextField txtTaxaDesconto;
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
+    private ArrayList<Hospede> cadastroHospede;
+    private int posHospede;
+
 }
