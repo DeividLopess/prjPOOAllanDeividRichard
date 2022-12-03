@@ -8,6 +8,9 @@ package fatec.poo.view;
 
 import fatec.poo.model.Atendente;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +23,7 @@ public class GuiCadastroAtendente extends javax.swing.JFrame {
      */
     public GuiCadastroAtendente(ArrayList<Atendente> atendentes) {
         initComponents();
+        cadastroAtendente = atendentes;
     }
 
     /**
@@ -31,6 +35,7 @@ public class GuiCadastroAtendente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        grdbTurno = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -44,6 +49,10 @@ public class GuiCadastroAtendente extends javax.swing.JFrame {
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        rbdManha = new javax.swing.JRadioButton();
+        rbdTarde = new javax.swing.JRadioButton();
+        rbdNoite = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro Atendente");
@@ -56,17 +65,21 @@ public class GuiCadastroAtendente extends javax.swing.JFrame {
 
         jLabel4.setText("Telefone");
 
+        txtNome.setEnabled(false);
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
             }
         });
 
+        txtEndereco.setEnabled(false);
         txtEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEnderecoActionPerformed(evt);
             }
         });
+
+        txtTelefone.setEnabled(false);
 
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/icon/Consultar.png"))); // NOI18N
         btnConsultar.setText("Consultar");
@@ -111,39 +124,77 @@ public class GuiCadastroAtendente extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Turno"));
+        jPanel1.setToolTipText("");
+
+        grdbTurno.add(rbdManha);
+        rbdManha.setSelected(true);
+        rbdManha.setText("Manhã");
+
+        grdbTurno.add(rbdTarde);
+        rbdTarde.setText("Tarde");
+
+        grdbTurno.add(rbdNoite);
+        rbdNoite.setText("Noite");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(rbdManha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbdTarde)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbdNoite)
+                .addGap(0, 47, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbdManha)
+                    .addComponent(rbdTarde)
+                    .addComponent(rbdNoite))
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(txtRegistroFuncional, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtTelefone, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(btnConsultar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnInserir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAlterar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExcluir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSair)
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTelefone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtRegistroFuncional, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                                .addComponent(txtEndereco)
+                                .addComponent(txtNome))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnInserir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAlterar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSair)))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,33 +215,145 @@ public class GuiCadastroAtendente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConsultar)
                     .addComponent(btnInserir)
                     .addComponent(btnAlterar)
                     .addComponent(btnExcluir)
                     .addComponent(btnSair))
-                .addGap(66, 66, 66))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-       
+        int i;
+        
+        for ( i = 0; i < cadastroAtendente.size() ; i++) {
+            if(cadastroAtendente.get(i).getRegFunc().equals(txtRegistroFuncional.getText())) {
+                break;
+            }
+        }
+        
+        if(i < cadastroAtendente.size()){
+            posAtendente = i;
+        }else{
+            posAtendente = -1;
+        }
+        
+        if(posAtendente >=0){
+        txtNome.setText(cadastroAtendente.get(posAtendente).getNome());
+        txtEndereco.setText(cadastroAtendente.get(posAtendente).getEndereco());
+        txtTelefone.setText(cadastroAtendente.get(posAtendente).getTelefone());
+        
+        if(cadastroAtendente.get(posAtendente).getTurno().equals("Manhã")){
+            rbdManha.setSelected(true);
+        }else if(cadastroAtendente.get(posAtendente).getTurno().equals("Tarde")) {
+            rbdTarde.setSelected(true);
+        }else{
+            rbdNoite.setSelected(true); 
+        }
+            btnConsultar.setEnabled(false);
+            btnInserir.setEnabled(false);
+            btnAlterar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+            txtRegistroFuncional.setEnabled(false);
+        }else{
+            btnConsultar.setEnabled(false);
+            btnInserir.setEnabled(true);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false); 
+        }
+        txtNome.setEnabled(true);
+        txtEndereco.setEnabled(true);
+        txtTelefone.setEnabled(true);
+        txtRegistroFuncional.setEnabled(false);
+               
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-       
+        Atendente atendente = new Atendente(txtRegistroFuncional.getText(), txtNome.getText());
+        
+        if(rbdManha.isSelected()){
+            atendente.setTurno("Manhã");
+        }else if(rbdTarde.isSelected()){
+            atendente.setTurno("Tarde");
+        }else{
+            atendente.setTurno("Noite");
+        }
+        atendente.setEndereco(txtEndereco.getText());
+        atendente.setTelefone(txtTelefone.getText());
+        
+        System.out.println(atendente.getTurno());
+        
+        cadastroAtendente.add(atendente);
+        
+        txtRegistroFuncional.setText(null);
+        txtNome.setText(null);
+        txtEndereco.setText(null);
+        txtTelefone.setText(null);
+        
+        txtRegistroFuncional.setEnabled(true);
+        txtNome.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        
+        btnConsultar.setEnabled(true);
+        btnInserir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        
+        txtRegistroFuncional.requestFocus();
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-       
+        cadastroAtendente.get(posAtendente).setEndereco(txtEndereco.getText());
+        cadastroAtendente.get(posAtendente).setTelefone(txtTelefone.getText());
+        
+        
+        if(rbdManha.isSelected()){
+            cadastroAtendente.get(posAtendente).setTurno("Manhã");
+        }else if(rbdTarde.isSelected()){
+            cadastroAtendente.get(posAtendente).setTurno("Tarde");
+        }else{
+            cadastroAtendente.get(posAtendente).setTurno("Noite");
+        }
+        
+        txtRegistroFuncional.setText(null);
+        txtRegistroFuncional.setEnabled(true);
+        txtNome.setText(null);
+        txtEndereco.setText(null);
+        txtTelefone.setText(null);
+        
+        btnConsultar.setEnabled(true);
+        btnInserir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        
+        txtRegistroFuncional.requestFocus();  
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+            if (posAtendente >= 0){
+            cadastroAtendente.remove(posAtendente);
+            posAtendente = -1;
+        }
         
+        txtRegistroFuncional.setText(null);
+        txtEndereco.setText(null);
+        txtTelefone.setText(null);
+        txtNome.setText(null);
+        btnConsultar.setEnabled(true);
+        btnInserir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        txtRegistroFuncional.setEnabled(true);
+        txtNome.setEnabled(true);
+        txtRegistroFuncional.requestFocus();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -213,13 +376,20 @@ public class GuiCadastroAtendente extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnSair;
+    private javax.swing.ButtonGroup grdbTurno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton rbdManha;
+    private javax.swing.JRadioButton rbdNoite;
+    private javax.swing.JRadioButton rbdTarde;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtRegistroFuncional;
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
+    private ArrayList<Atendente> cadastroAtendente;
+    private int posAtendente;
 }
