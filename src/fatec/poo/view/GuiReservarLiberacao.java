@@ -8,7 +8,12 @@ package fatec.poo.view;
 import fatec.poo.model.Atendente;
 import fatec.poo.model.Hospede;
 import fatec.poo.model.QuartoHotel;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,7 +56,7 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
         btnLiberar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         lblNomeHospede = new javax.swing.JLabel();
-        lblValorPagar1 = new javax.swing.JLabel();
+        lblValorPagar = new javax.swing.JLabel();
         lblSituacao = new javax.swing.JLabel();
         lblNomeAtendente = new javax.swing.JLabel();
         btnPesquisarRegFunc = new javax.swing.JButton();
@@ -116,7 +121,7 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
 
         lblNomeHospede.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        lblValorPagar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        lblValorPagar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         lblSituacao.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
@@ -187,7 +192,7 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblValorPagar1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblValorPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -236,7 +241,7 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblValorPagar1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblValorPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -258,7 +263,22 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLiberarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiberarActionPerformed
-        // TODO add your handling code here:
+       SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+       Calendar data1 = Calendar.getInstance();
+       Calendar data2 = Calendar.getInstance();
+       int dias;
+       try {                //converte uma string no formato dd/mm/aaaa
+                            //para um objeto da classe Date
+             data1.setTime(sdf.parse(txtDataEntrada.getText()));
+             data2.setTime(sdf.parse(txtDataSaida.getText()));
+       } catch (java.text.ParseException e ) { }
+       dias = data2.get(Calendar.DAY_OF_YEAR) - data1.get(Calendar.DAY_OF_YEAR);
+         
+        
+        lblValorPagar.setText("R$ " + Double.toString(quartos.get(posQuarto).liberar(dias, hospedes.get(posHospede).getTxDesconto())));
+        hospedes.get(posHospede).setQuartoHotel(null);
+        btnLiberar.setEnabled(false);
+        
     }//GEN-LAST:event_btnLiberarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -386,14 +406,33 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
         }
         
         if (posQuarto >= 0){//operação de alterar e excluir
-            
-//           atendentes.get(posAtendente).addQuartoHotel(quartos.get(posQuarto));
-            
+            quartos.get(posQuarto).setDataEntrada(txtDataEntrada.getText());          
             quartos.get(posQuarto).reservar(hospedes.get(posHospede), atendentes.get(posAtendente));
+            atendentes.get(posAtendente).addQuartoHotel(quartos.get(posQuarto));
             
         }else{//operação incluir
                        
         }  
+        txtRegistroFuncional.setText(null);
+        txtCPFHospede.setText(null);
+        txtNumeroQuarto.setText(null);
+        txtDataEntrada.setText(null);
+        txtDataSaida.setText(null);
+        
+        txtCPFHospede.setEnabled(false);
+        txtNumeroQuarto.setEnabled(false);
+        txtDataEntrada.setEnabled(false);
+        txtDataSaida.setEnabled(false);
+        txtRegistroFuncional.setEnabled(true);
+        lblNomeAtendente.setText(null);
+        lblNomeHospede.setText(null);
+        lblSituacao.setText(null);
+        btnPesquisarRegFunc.setEnabled(true);
+        btnPesquisarNumeroQuarto.setEnabled(false);
+        btnReservar.setEnabled(false);
+        JOptionPane.showMessageDialog(null, "Reserva cadastrada");
+        
+        
     }//GEN-LAST:event_btnReservarActionPerformed
 
 
@@ -414,7 +453,7 @@ public class GuiReservarLiberacao extends javax.swing.JFrame {
     private javax.swing.JLabel lblNomeAtendente;
     private javax.swing.JLabel lblNomeHospede;
     private javax.swing.JLabel lblSituacao;
-    private javax.swing.JLabel lblValorPagar1;
+    private javax.swing.JLabel lblValorPagar;
     private javax.swing.JTextField txtCPFHospede;
     private javax.swing.JTextField txtDataEntrada;
     private javax.swing.JTextField txtDataSaida;

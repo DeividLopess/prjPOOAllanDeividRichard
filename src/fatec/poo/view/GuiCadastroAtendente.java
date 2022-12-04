@@ -327,13 +327,18 @@ public class GuiCadastroAtendente extends javax.swing.JFrame {
         txtRegistroFuncional.setText(null);
         txtRegistroFuncional.setEnabled(true);
         txtNome.setText(null);
+        txtNome.setEnabled(false);
         txtEndereco.setText(null);
+        txtEndereco.setEnabled(false);
         txtTelefone.setText(null);
+        txtTelefone.setEnabled(false);
         
         btnConsultar.setEnabled(true);
         btnInserir.setEnabled(false);
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
+        
+        
         
         txtRegistroFuncional.requestFocus();  
     }//GEN-LAST:event_btnAlterarActionPerformed
@@ -346,14 +351,18 @@ public class GuiCadastroAtendente extends javax.swing.JFrame {
         
         txtRegistroFuncional.setText(null);
         txtEndereco.setText(null);
+        txtEndereco.setEnabled(false);
         txtTelefone.setText(null);
+        txtTelefone.setEnabled(false);
         txtNome.setText(null);
+        txtNome.setEnabled(false);
+        
         btnConsultar.setEnabled(true);
         btnInserir.setEnabled(false);
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
         txtRegistroFuncional.setEnabled(true);
-        txtNome.setEnabled(true);
+ 
         txtRegistroFuncional.requestFocus();
     }//GEN-LAST:event_btnExcluirActionPerformed
 

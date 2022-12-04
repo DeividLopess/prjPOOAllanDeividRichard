@@ -14,6 +14,7 @@ public class Atendente extends Pessoa{
     public Atendente(String regFunc, String nome) {
         super(nome);
         this.regFunc = regFunc;
+        quartoHotel = new ArrayList<QuartoHotel>();
     }
     
     //SETS
@@ -31,7 +32,7 @@ public class Atendente extends Pessoa{
     }
     //ADD QUARTO HOTEL
     public void addQuartoHotel(QuartoHotel q){
-        this.quartoHotel.add(q);
+    quartoHotel.add(q);
     }
     
     //REMOVE QUARTO Hotel

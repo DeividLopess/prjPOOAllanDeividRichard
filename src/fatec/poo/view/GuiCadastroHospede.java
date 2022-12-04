@@ -8,6 +8,7 @@ package fatec.poo.view;
 import fatec.poo.model.Hospede;
 import java.util.ArrayList;
 import java.util.Set;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -244,10 +245,12 @@ public class GuiCadastroHospede extends javax.swing.JFrame {
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         Hospede hospede = new Hospede(txtCpf.getText(), txtNome.getText());
-
+        hospede.setTxDesconto(Double.parseDouble(txtTaxaDesconto.getText()));
         hospede.setEndereco(txtEndereco.getText());
         hospede.setTelefone(txtTelefone.getText());
-        hospede.setTxDesconto(Double.parseDouble(txtTaxaDesconto.getText()));
+        
+    
+            
         hospede.setIdade((txtIdade.getText()));
         
         cadastroHospede.add(hospede);

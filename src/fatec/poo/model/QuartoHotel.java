@@ -5,6 +5,8 @@
  */
 package fatec.poo.model;
 
+
+
 /**
  *
  * @author Deivi
@@ -26,22 +28,20 @@ public class QuartoHotel {
     //RESERVAR
     public void reservar(Hospede h, Atendente a){
         situacao = true;
-        h.setQuartoHotel(this);
-        a.addQuartoHotel(this);
-        hospede = h;
         atendente = a;
-        
+        hospede = h;
+        //a.addQuartoHotel(this);
+        h.setQuartoHotel(this);
     }
     //LIBERAR
     public double liberar(int dias, double taxaDesconto){
-        taxaDesconto = taxaDesconto/100;
         double valorHospedagem =0;
         situacao = false;
-        dataEntrada ="";
+        dataEntrada =null;
         hospede = null;
         atendente.removeQuartoHotel(this);
         atendente = null;
-        valorHospedagem += (dias * valorDiaria) - (dias * taxaDesconto);
+        valorHospedagem += (dias * valorDiaria) - ((dias * valorDiaria) * taxaDesconto);
         totalFaturado = valorHospedagem;
         return valorHospedagem;
     }
